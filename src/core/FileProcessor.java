@@ -31,15 +31,13 @@ public class FileProcessor
    
    public void checkArguments(String[] args)
    {
-      
-      // check for appropriate number of command line arguments
       if (args.length != 7)
       {
         
          System.out.println("Invalid number of command line arguments");
          System.exit(1);
       }
-      // confirm and echo command line arguments if length of inputs is valid 
+      // confirm and echo command line args
       else
       {
          
@@ -51,14 +49,11 @@ public class FileProcessor
          System.out.println(">> Alphabet size: " + this.alphaSize);
          System.out.println(">> Decoded text: " + this.decodedText);
          System.out.println(">> Container file path: " + this.container);
-         
       }
-      
    }  
    
    public PrintWriter readFile(String filePath)
    {
-      
       PrintWriter writer;
    
       try
@@ -67,38 +62,26 @@ public class FileProcessor
          writer = new PrintWriter(new FileWriter(filePath));
          
          return writer;
-        
       }
       catch (Exception ioe)
       {
-        
           System.err.println(ioe.toString());
           
           return null;
-         
       }
-      
    }  
    
    public void closeFile(PrintWriter file)
    {
-      
       try
       {  
-         
-         // print footer information to output file
-         // file.println("\n\nGreg Guillot\n" + "Lab 3, Huffman Encoding\n");
-        
          file.close();
-         
          System.out.println(">> " + "Output file successfully closed.");
         
       }
       catch (Exception e)
       {
-        
          System.err.println(e.toString());
-        
       }
       
    }  
@@ -109,44 +92,32 @@ public class FileProcessor
        
        try (BufferedReader br = new BufferedReader(new FileReader(filePath)))
        {
-
            String sCurrentLine;
            while ((sCurrentLine = br.readLine()) != null)
-           {
-              
+           { 
                contentBuilder.append(sCurrentLine).append("\n");
-               
            }
-           
        }
        catch (IOException e)
        {
-          
-           e.printStackTrace();
-           
+           e.printStackTrace(); 
        }
        
-       return contentBuilder.toString();
-       
+       return contentBuilder.toString(); 
    }  
    
    public char[] extractAlpha(String filePath, int alphaSize)
    {
-      
       char[] fullStringCharArray = filePath.toCharArray();
       char[] alphaCharsArray = new char[alphaSize];
       
       int counter = 0;
       for (int i = 0; i < fullStringCharArray.length; i++)
       {
- 
-         
          if (fullStringCharArray[i] >= 65 & fullStringCharArray[i] <= 90)
          {
-            
             alphaCharsArray[counter] = fullStringCharArray[i];
             counter++;
-            
          }
          
       } 
@@ -157,8 +128,8 @@ public class FileProcessor
    
     public int[] extractFreqValues()
     {
-    
        ArrayList<String> freqStringsList = new ArrayList<>();
+       
        try (BufferedReader br = new BufferedReader(
              new FileReader(this.freqTable))) 
        {
@@ -166,13 +137,10 @@ public class FileProcessor
            {
               freqStringsList.add(br.readLine());
            }
-           
        }
        catch (Exception e)
        {
-         
           System.err.println(e.toString());
-         
        }
        
        String[] freqStringsArray = new String[freqStringsList.size()];
@@ -194,26 +162,22 @@ public class FileProcessor
           
           // remove letter characters
           freqStringsArray[i] = freqStringsArray[i].replaceAll("[A-Z]", "");
-       
        }
        
        int[] freqIntArray = new int[freqStringsArray.length]; 
        
        for (int i = 0; i < freqStringsArray.length; i++)
-       {
-          
+       {     
           freqIntArray[i] = Integer.parseInt(freqStringsArray[i]); 
-        
        }
        
        return freqIntArray;
-       
     } 
     
     public String[] extractCodeValues()
     {
-        
         ArrayList<String> codeStringsList = new ArrayList<>();
+       
         try (BufferedReader br = new BufferedReader(
               new FileReader(this.codeLegend))) 
         {
@@ -223,28 +187,24 @@ public class FileProcessor
             }
         }
         catch (Exception e)
-        {
-          
+        { 
            System.err.println(e.toString());
-          
         }
         
         String[] codeStringsArray = new String[codeStringsList.size()];
+        
         codeStringsArray = codeStringsList.toArray(codeStringsArray);
         
         for (int i = 0; i < codeStringsArray.length; i++)
         {
-           
            // remove hyphen sign
            codeStringsArray[i] = codeStringsArray[i].replace(" - ", "");
            
            // remove letter characters
            codeStringsArray[i] = codeStringsArray[i].replaceAll("[A-Z]", "");
-        
         }
         
         return codeStringsArray;
-        
      }  
 
 } 
